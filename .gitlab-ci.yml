@@ -142,6 +142,7 @@ test legacy:
 
 test storage:
   stage: test
+  dependencies: []
   script:
     - cd storage/tests
     - pipenv run make build
