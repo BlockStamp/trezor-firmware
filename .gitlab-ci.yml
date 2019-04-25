@@ -74,33 +74,32 @@ build legacy:
     - pipenv run script/cibuild
     - pipenv run make -C bootloader
     - pipenv run make -C demo
+  artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_SHORT_SHA"
+    untracked: true
+    expire_in: 1 day
 
 test style:
   stage: test
+  dependencies: []
   script:
     - pipenv run make style_check
     - cd core && pipenv run make templates_check  # TODO
 
 test core unix unit:
   stage: test
-  dependencies:
-    - build core unix
   script:
     - cd core
     - pipenv run make test
 
 test core unix device:
   stage: test
-  dependencies:
-    - build core unix
   script:
     - cd core
     - pipenv run make test_emu
 
 test core unix monero:
   stage: test
-  dependencies:
-    - build core unix
   script:
     - cd core
     - pipenv run make test_emu_monero
@@ -137,5 +136,4 @@ test legacy:
     DEBUG_LINK: "1"
   script:
     - cd legacy
-    - pipenv run script/cibuild
     - pipenv run script/test
