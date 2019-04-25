@@ -139,3 +139,10 @@ test legacy:
     - cd legacy
     - pipenv run script/cibuild
     - pipenv run script/test
+
+test storage:
+  stage: test
+  script:
+    - cd storage/tests
+    - pipenv run make build
+    - pipenv run make tests_all
